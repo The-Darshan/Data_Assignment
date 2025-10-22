@@ -1,38 +1,39 @@
-📘 Web Scraping and Data Security Project
-🖥️ 1. Website Scraped
-We used Books to Scrape, a website designed for practicing web scraping. It was selected because:
+# 📘 Web Scraping and Data Security Project
 
-✅ Educational and scraping-friendly
+## 🖥️ 1. Website Scraped
 
-📚 Structured book data
+We used **Books to Scrape**, a website designed for practicing web scraping. It was selected because:
 
-🔄 Consistent formatting
+- ✅ Educational and scraping-friendly  
+- 📚 Structured book data  
+- 🔄 Consistent formatting  
+- 📊 Multiple attributes per item  
+- ⚡ Reliable uptime and performance  
 
-📊 Multiple attributes per item
+## 📦 2. Data Fields Extracted
 
-⚡ Reliable uptime and performance
-
-📦 2. Data Fields Extracted
 The following fields were extracted from each book listing:
 
-Field	Description	Example
-Title	Full book title	"The Great Gatsby"
-Price	Price in GBP (£)	"£9.99"
-Availability	Stock status	"In stock"
-Rating	Star rating (One to Five)	"Four"
-Data was saved in CSV format for easy analysis.
+| Field        | Description           | Example             |
+|--------------|------------------------|---------------------|
+| Title        | Full book title        | "The Great Gatsby"  |
+| Price        | Price in GBP (£)       | "£9.99"             |
+| Availability | Stock status           | "In stock"          |
+| Rating       | Star rating (One-Five) | "Four"              |
 
-🔐 3. Security Measures
-To protect the scraped data, we implemented encryption using the cryptography library.
+Data was saved in **CSV format** for easy analysis.
 
-🔑 A. Encryption Strategy
-Fernet symmetric encryption
+## 🔐 3. Security Measures
 
-Secure key generation and storage
+To protect the scraped data, we implemented encryption using the `cryptography` library.
 
-Support for both encryption and decryption
+### 🔑 A. Encryption Strategy
 
-python
+- Fernet symmetric encryption  
+- Secure key generation and storage  
+- Support for both encryption and decryption  
+
+```python
 # Key Generation
 key = Fernet.generate_key()
 with open("secret.key", "wb") as key_file:
@@ -41,40 +42,44 @@ with open("secret.key", "wb") as key_file:
 # Encryption
 fernet = Fernet(key)
 encrypted_data = fernet.encrypt(original_data)
-🔄 B. Data Protection Workflow
-Save raw data to books_raw.csv
+```
 
-Encrypt and store as books_encrypted.csv
+### 🔄 B. Data Protection Workflow
 
-Store encryption key separately in secret.key
+1. Save raw data to `books_raw.csv`  
+2. Encrypt and store as `books_encrypted.csv`  
+3. Store encryption key separately in `secret.key`  
+4. Verify decryption via `books_decrypted.csv`  
 
-Verify decryption via books_decrypted.csv
+## ⚙️ 4. Challenges Faced
 
-⚙️ 4. Challenges Faced
-🧩 Technical Challenges
-HTML Navigation: Solved using BeautifulSoup with class selectors and error handling
+### 🧩 Technical Challenges
 
-Data Integrity: Verified through decryption testing
+- **HTML Navigation**: Solved using BeautifulSoup with class selectors and error handling  
+- **Data Integrity**: Verified through decryption testing  
+- **File Handling**: Managed with context managers (`with` statements)  
 
-File Handling: Managed with context managers (with statements)
+### 🔧 Implementation Challenges
 
-🔧 Implementation Challenges
-Key Management: Resolved by separating key storage
+- **Key Management**: Resolved by separating key storage  
+- **Error Handling**: Used `try-except` blocks for network resilience  
 
-Error Handling: Used try-except blocks for network resilience
+## 🧪 5. Code Snippets
 
-🧪 5. Code Snippets
-🕸️ Web Scraping
-python
+### 🕸️ Web Scraping
+
+```python
 # Extract book data
 for book in soup.find_all("article", class_="product_pod"):
     title = book.h3.a["title"]
     price = book.find("p", class_="price_color").text.strip()
     availability = book.find("p", class_="instock").text.strip()
     rating = book.find("p", class_="star-rating")["class"][1]
-🔐 Data Encryption
-python
-# Encrypt raw CSV data
+```
+
+### 🔐 Data Encryption
+
+```python
 with open("books_raw.csv", "rb") as file:
     original_data = file.read()
 
@@ -83,14 +88,21 @@ encrypted_data = fernet.encrypt(original_data)
 
 with open("books_encrypted.csv", "wb") as enc_file:
     enc_file.write(encrypted_data)
-🧭 6. Ethical Considerations
-✅ Responsible Practices
-Rate Limiting: Added 2-second delay between requests
+```
 
-python
+## 🧭 6. Ethical Considerations
+
+### ✅ Responsible Practices
+
+- **Rate Limiting**: Added 2-second delay between requests  
+```python
 time.sleep(2)
-User-Agent Identification:
+```
 
-python
+- **User-Agent Identification**:  
+```python
 headers = {"User-Agent": "Mozilla/5.0"}
-Data Protection: Encrypted sensitive data and securely managed keys
+```
+
+- **Data Protection**: Encrypted sensitive data and securely managed keys
+```
